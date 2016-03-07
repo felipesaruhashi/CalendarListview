@@ -31,13 +31,20 @@ public class MainActivity extends Activity implements com.andexert.calendarlistv
         cal.set(Calendar.DAY_OF_MONTH, 28);
 
 
-        dayPickerView.setmEndAvailableDate(cal.getTime());
+//        dayPickerView.setmEndAvailableDate(cal.getTime());
         dayPickerView.setController(this);
 
         ( (Button) findViewById(R.id.btnReset) ).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dayPickerView.reset();
+            }
+        });
+
+        ( (Button) findViewById(R.id.btnScroolFirstSelection) ).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dayPickerView.scroolToFirstSelection();
             }
         });
     }
@@ -67,7 +74,7 @@ public class MainActivity extends Activity implements com.andexert.calendarlistv
 
         Calendar cal = Calendar.getInstance();
 
-        return 2018;
+        return 2030;
     }
 
     @Override

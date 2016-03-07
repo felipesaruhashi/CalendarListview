@@ -309,8 +309,7 @@ public class SimpleMonthAdapter extends RecyclerView.Adapter<SimpleMonthAdapter.
         }
     }
 
-    public SelectedDays<CalendarDay> getSelectedDays()
-    {
+    public SelectedDays<CalendarDay> getSelectedDays() {
         return selectedDays;
     }
 

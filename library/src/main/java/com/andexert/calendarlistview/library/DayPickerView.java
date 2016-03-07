@@ -28,7 +28,9 @@ import android.content.res.TypedArray;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class DayPickerView extends RecyclerView
@@ -45,8 +47,7 @@ public class DayPickerView extends RecyclerView
     private Date mStartAvailableDate;
     private Date mEndAvailableDate;
 
-    public DayPickerView(Context context)
-    {
+    public DayPickerView(Context context) {
         this(context, null);
     }
 
@@ -55,19 +56,16 @@ public class DayPickerView extends RecyclerView
         this(context, attrs, 0);
     }
 
-    public DayPickerView(Context context, AttributeSet attrs, int defStyle)
-    {
+    public DayPickerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        if (!isInEditMode())
-        {
+        if (!isInEditMode()) {
             typedArray = context.obtainStyledAttributes(attrs, R.styleable.DayPickerView);
             setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
             init(context);
         }
     }
 
-    public void setController(DatePickerController mController)
-    {
+    public void setController(DatePickerController mController) {
         this.mController = mController;
         setUpAdapter();
         setAdapter(mAdapter);
@@ -79,11 +77,9 @@ public class DayPickerView extends RecyclerView
 		mContext = paramContext;
 		setUpListView();
 
-        onScrollListener = new OnScrollListener()
-        {
+        onScrollListener = new OnScrollListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
-            {
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 final SimpleMonthView child = (SimpleMonthView) recyclerView.getChildAt(0);
                 if (child == null) {
@@ -102,8 +98,6 @@ public class DayPickerView extends RecyclerView
 			mAdapter = new SimpleMonthAdapter(getContext(), mController, typedArray);
             mAdapter.setmStartAvailableDate(mStartAvailableDate);
             mAdapter.setmEndAvailableDate(mEndAvailableDate);
-
-
         }
 		mAdapter.notifyDataSetChanged();
 	}
@@ -114,18 +108,15 @@ public class DayPickerView extends RecyclerView
 		setFadingEdgeLength(0);
 	}
 
-    public SimpleMonthAdapter.SelectedDays<SimpleMonthAdapter.CalendarDay> getSelectedDays()
-    {
+    public SimpleMonthAdapter.SelectedDays<SimpleMonthAdapter.CalendarDay> getSelectedDays() {
         return mAdapter.getSelectedDays();
     }
 
-    protected DatePickerController getController()
-    {
+    protected DatePickerController getController() {
         return mController;
     }
 
-    protected TypedArray getTypedArray()
-    {
+    protected TypedArray getTypedArray() {
         return typedArray;
     }
 
@@ -147,5 +138,27 @@ public class DayPickerView extends RecyclerView
 
     public void reset() {
         mAdapter.reset();
+    }
+
+    public void scroolToFirstSelection() {
+        SimpleMonthAdapter.SelectedDays<SimpleMonthAdapter.CalendarDay> selectedDays = mAdapter.getSelectedDays();
+
+        if (selectedDays != null && selectedDays.getFirst() != null ) {
+
+            int diff = 0;
+            Calendar cal = Calendar.getInstance();
+            if ( cal.get(Calendar.YEAR) == selectedDays.getFirst().year) {
+                diff = selectedDays.getFirst().month - cal.get(Calendar.MONTH);
+            } else if ( cal.get(Calendar.YEAR) < selectedDays.getFirst().year ) {
+                diff = (selectedDays.getFirst().year - cal.get(Calendar.YEAR)) * 12 + selectedDays.getFirst().month;
+            }
+
+
+            Log.i("debugando", "diff: " + diff);
+
+
+            this.scrollToPosition(diff);
+        }
+
     }
 }
