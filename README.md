@@ -5,8 +5,9 @@ CalendarListview
 Forked from [traex CalendarListView](https://github.com/traex/CalendarListview).
 
 This fork have some new features, like:
-* Limit the start date possible.
-* Limit the end date possible.
+* Limit the start possible date. 
+* Limit the end possible date.
+* Reset the selected range. 
 
 
 ![CalendarListview](https://github.com/traex/CalendarListview/blob/master/header.png)
