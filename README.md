@@ -1,6 +1,14 @@
 CalendarListview
 ================
 
+
+Forked from [traex CalendarListView](https://github.com/traex/CalendarListview).
+
+This fork have some new features, like:
+* Limit the start date possible limit.
+* Limit the end date possible limit.
+
+
 ![CalendarListview](https://github.com/traex/CalendarListview/blob/master/header.png)
 
 CalendarListview provides a easy way to select dates with a calendar for API 10+. [You can find a sample](https://github.com/traex/CalendarListview/blob/master/sample/) that show how to add DatePickerView to your layout without customization. 
@@ -8,11 +16,13 @@ CalendarListview provides a easy way to select dates with a calendar for API 10+
 ![CalendarListview GIF](https://github.com/traex/CalendarListview/blob/master/demo.gif)
  
 ### Integration
-The lib is available on Maven Central, you can find it with [Gradle, please](http://gradleplease.appspot.com/#calendarlistview)
-``` xml
+
+repositories {
+        maven { url "https://jitpack.io" }
+}
 
 dependencies {
-    compile 'com.github.traex.calendarlistview:library:1.2.3'
+      compile 'com.github.felipesaruhashi:CalendarListview:master'
 }
 
 ```
