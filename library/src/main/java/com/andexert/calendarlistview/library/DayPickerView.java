@@ -144,4 +144,8 @@ public class DayPickerView extends RecyclerView
     public void setmEndAvailableDate(Date mEndAvailableDate) {
         this.mEndAvailableDate = mEndAvailableDate;
     }
+
+    public void reset() {
+        mAdapter.reset();
+    }
 }

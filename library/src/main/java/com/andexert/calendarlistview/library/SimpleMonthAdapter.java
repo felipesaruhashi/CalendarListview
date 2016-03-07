@@ -67,6 +67,13 @@ public class SimpleMonthAdapter extends RecyclerView.Adapter<SimpleMonthAdapter.
         return new ViewHolder(simpleMonthView, this);
     }
 
+    public void reset() {
+        selectedDays.setFirst(null);
+        selectedDays.setLast(null);
+        notifyDataSetChanged();
+
+    }
+
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position)
     {
@@ -306,6 +313,8 @@ public class SimpleMonthAdapter extends RecyclerView.Adapter<SimpleMonthAdapter.
     {
         return selectedDays;
     }
+
+
 
     public static class SelectedDays<K> implements Serializable
     {

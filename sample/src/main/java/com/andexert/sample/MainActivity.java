@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.andexert.calendarlistview.library.DayPickerView;
 import com.andexert.calendarlistview.library.SimpleMonthAdapter;
@@ -31,6 +33,13 @@ public class MainActivity extends Activity implements com.andexert.calendarlistv
 
         dayPickerView.setmEndAvailableDate(cal.getTime());
         dayPickerView.setController(this);
+
+        ( (Button) findViewById(R.id.btnReset) ).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dayPickerView.reset();
+            }
+        });
     }
 
 
@@ -55,9 +64,10 @@ public class MainActivity extends Activity implements com.andexert.calendarlistv
 
     @Override
     public int getMaxYear() {
+
         Calendar cal = Calendar.getInstance();
 
-        return cal.get(Calendar.YEAR);
+        return 2018;
     }
 
     @Override
