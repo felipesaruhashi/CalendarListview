@@ -29,6 +29,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 
+import java.util.Date;
+
 public class DayPickerView extends RecyclerView
 {
     protected Context mContext;
@@ -39,6 +41,9 @@ public class DayPickerView extends RecyclerView
 	protected int mPreviousScrollState = 0;
     private TypedArray typedArray;
     private OnScrollListener onScrollListener;
+
+    private Date mStartAvailableDate;
+    private Date mEndAvailableDate;
 
     public DayPickerView(Context context)
     {
@@ -95,6 +100,10 @@ public class DayPickerView extends RecyclerView
 	protected void setUpAdapter() {
 		if (mAdapter == null) {
 			mAdapter = new SimpleMonthAdapter(getContext(), mController, typedArray);
+            mAdapter.setmStartAvailableDate(mStartAvailableDate);
+            mAdapter.setmEndAvailableDate(mEndAvailableDate);
+
+
         }
 		mAdapter.notifyDataSetChanged();
 	}
@@ -118,5 +127,21 @@ public class DayPickerView extends RecyclerView
     protected TypedArray getTypedArray()
     {
         return typedArray;
+    }
+
+    public Date getmStartAvailableDate() {
+        return mStartAvailableDate;
+    }
+
+    public void setmStartAvailableDate(Date mStartAvailableDate) {
+        this.mStartAvailableDate = mStartAvailableDate;
+    }
+
+    public Date getmEndAvailableDate() {
+        return mEndAvailableDate;
+    }
+
+    public void setmEndAvailableDate(Date mEndAvailableDate) {
+        this.mEndAvailableDate = mEndAvailableDate;
     }
 }

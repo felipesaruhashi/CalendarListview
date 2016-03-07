@@ -34,6 +34,7 @@ import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.text.format.DateUtils;
 import android.text.format.Time;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -56,6 +57,14 @@ class SimpleMonthView extends View
     public static final String VIEW_PARAMS_SELECTED_BEGIN_YEAR = "selected_begin_year";
     public static final String VIEW_PARAMS_SELECTED_LAST_YEAR = "selected_last_year";
     public static final String VIEW_PARAMS_WEEK_START = "week_start";
+
+    public static final String VIEW_PARAMS_AVAILABLE_START_DAY = "start_available_day";
+    public static final String VIEW_PARAMS_AVAILABLE_START_MONTH = "start_available_month";
+    public static final String VIEW_PARAMS_AVAILABLE_START_YEAR = "start_available_year";
+
+    public static final String VIEW_PARAMS_AVAILABLE_END_DAY = "end_available_day";
+    public static final String VIEW_PARAMS_AVAILABLE_END_MONTH = "end_available_month";
+    public static final String VIEW_PARAMS_AVAILABLE_END_YEAR = "end_available_year";
 
     private static final int SELECTED_CIRCLE_ALPHA = 128;
     protected static int DEFAULT_HEIGHT = 32;
@@ -107,6 +116,12 @@ class SimpleMonthView extends View
     protected int mWidth;
     protected int mYear;
     final Time today;
+    protected int mStartAvailableDay = -1;
+    protected int mStartAvailableMonth = -1;
+    protected int mStartAvailableYear = -1;
+    protected int mEndAvailableDay = -1;
+    protected int mEndAvailableMonth = -1;
+    protected int mEndAvailableYear = -1;
 
 	private final Calendar mCalendar;
 	private final Calendar mDayLabelCalendar;
@@ -279,6 +294,22 @@ class SimpleMonthView extends View
                 mMonthNumPaint.setTypeface(Typeface.defaultFromStyle(Typeface.ITALIC));
             }
 
+            if ( mStartAvailableDay != -1 &&
+                    ( (mMonth == mStartAvailableMonth && mYear == mStartAvailableYear && mStartAvailableDay > day )
+                            || ( mYear == mStartAvailableYear && mMonth < mStartAvailableMonth )
+                            || (mYear < mStartAvailableYear) ) ) {
+
+                mMonthNumPaint.setAlpha(70);
+
+            }
+
+            if ( mEndAvailableMonth != -1 &&
+                    ( (mMonth == mEndAvailableMonth && mYear == mEndAvailableYear && mEndAvailableDay < day )
+                            || ( mYear == mEndAvailableYear && mMonth > mEndAvailableMonth )
+                            || (mYear > mEndAvailableYear) ) ) {
+                mMonthNumPaint.setAlpha(70);
+            }
+
 			canvas.drawText(String.format("%d", day), x, y, mMonthNumPaint);
 
 			dayOffset++;
@@ -406,6 +437,27 @@ class SimpleMonthView extends View
         if (params.containsKey(VIEW_PARAMS_SELECTED_LAST_YEAR)) {
             mSelectedLastYear = params.get(VIEW_PARAMS_SELECTED_LAST_YEAR);
         }
+
+        if (params.containsKey(VIEW_PARAMS_AVAILABLE_START_DAY)) {
+            mStartAvailableDay = params.get(VIEW_PARAMS_AVAILABLE_START_DAY);
+        }
+        if (params.containsKey(VIEW_PARAMS_AVAILABLE_START_MONTH)) {
+            mStartAvailableMonth = params.get(VIEW_PARAMS_AVAILABLE_START_MONTH);
+        }
+        if (params.containsKey(VIEW_PARAMS_AVAILABLE_START_YEAR)) {
+            mStartAvailableYear = params.get(VIEW_PARAMS_AVAILABLE_START_YEAR);
+        }
+
+        if (params.containsKey(VIEW_PARAMS_AVAILABLE_END_DAY)) {
+            mEndAvailableDay = params.get(VIEW_PARAMS_AVAILABLE_END_DAY);
+        }
+        if (params.containsKey(VIEW_PARAMS_AVAILABLE_END_MONTH)) {
+            mEndAvailableMonth = params.get(VIEW_PARAMS_AVAILABLE_END_MONTH);
+        }
+        if (params.containsKey(VIEW_PARAMS_AVAILABLE_END_YEAR)) {
+            mEndAvailableYear = params.get(VIEW_PARAMS_AVAILABLE_END_YEAR);
+        }
+
 
         mMonth = params.get(VIEW_PARAMS_MONTH);
         mYear = params.get(VIEW_PARAMS_YEAR);

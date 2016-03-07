@@ -46,6 +46,9 @@ public class SimpleMonthAdapter extends RecyclerView.Adapter<SimpleMonthAdapter.
     private final Integer firstMonth;
     private final Integer lastMonth;
 
+    private Date mStartAvailableDate;
+    private Date mEndAvailableDate;
+
 	public SimpleMonthAdapter(Context context, DatePickerController datePickerController, TypedArray typedArray) {
         this.typedArray = typedArray;
         calendar = Calendar.getInstance();
@@ -107,6 +110,23 @@ public class SimpleMonthAdapter extends RecyclerView.Adapter<SimpleMonthAdapter.
         drawingParams.put(SimpleMonthView.VIEW_PARAMS_YEAR, year);
         drawingParams.put(SimpleMonthView.VIEW_PARAMS_MONTH, month);
         drawingParams.put(SimpleMonthView.VIEW_PARAMS_WEEK_START, calendar.getFirstDayOfWeek());
+
+        if ( mStartAvailableDate != null ) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(mStartAvailableDate);
+            drawingParams.put(SimpleMonthView.VIEW_PARAMS_AVAILABLE_START_DAY, cal.get(Calendar.DAY_OF_MONTH));
+            drawingParams.put(SimpleMonthView.VIEW_PARAMS_AVAILABLE_START_MONTH, cal.get(Calendar.MONTH));
+            drawingParams.put(SimpleMonthView.VIEW_PARAMS_AVAILABLE_START_YEAR, cal.get(Calendar.YEAR));
+        }
+
+        if ( mEndAvailableDate != null ) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(mEndAvailableDate);
+            drawingParams.put(SimpleMonthView.VIEW_PARAMS_AVAILABLE_END_DAY, cal.get(Calendar.DAY_OF_MONTH));
+            drawingParams.put(SimpleMonthView.VIEW_PARAMS_AVAILABLE_END_MONTH, cal.get(Calendar.MONTH));
+            drawingParams.put(SimpleMonthView.VIEW_PARAMS_AVAILABLE_END_YEAR, cal.get(Calendar.YEAR));
+        }
+
         v.setMonthParams(drawingParams);
         v.invalidate();
     }
@@ -149,6 +169,31 @@ public class SimpleMonthAdapter extends RecyclerView.Adapter<SimpleMonthAdapter.
 	}
 
 	public void onDayClick(SimpleMonthView simpleMonthView, CalendarDay calendarDay) {
+
+        // in case of was set a start for available date, ignores any touch before
+        if (mStartAvailableDate != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(mStartAvailableDate);
+
+               if ( (calendarDay.month == cal.get(Calendar.MONTH) && calendarDay.year == cal.get(Calendar.YEAR) && cal.get(Calendar.DAY_OF_MONTH) > calendarDay.day )
+                        || ( cal.get(Calendar.YEAR) == cal.get(Calendar.YEAR) && calendarDay.month < cal.get(Calendar.MONTH) )
+                        || (calendarDay.year < cal.get(Calendar.YEAR)) )  {
+                return;
+            }
+        }
+
+        // in case of was set a end for available date, ignores any touch after
+        if ( mEndAvailableDate != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(mEndAvailableDate);
+
+            if ( (calendarDay.month == cal.get(Calendar.MONTH) && calendarDay.year == cal.get(Calendar.YEAR) && cal.get(Calendar.DAY_OF_MONTH) < calendarDay.day )
+                || ( calendarDay.year == cal.get(Calendar.YEAR) && calendarDay.month > cal.get(Calendar.MONTH) )
+                    || (calendarDay.year > cal.get(Calendar.YEAR)) ) {
+                return;
+            }
+        }
+
 		if (calendarDay != null) {
 			onDayTapped(calendarDay);
         }
@@ -287,5 +332,21 @@ public class SimpleMonthAdapter extends RecyclerView.Adapter<SimpleMonthAdapter.
         {
             this.last = last;
         }
+    }
+
+    public Date getmStartAvailableDate() {
+        return mStartAvailableDate;
+    }
+
+    public void setmStartAvailableDate(Date mStartAvailableDate) {
+        this.mStartAvailableDate = mStartAvailableDate;
+    }
+
+    public Date getmEndAvailableDate() {
+        return mEndAvailableDate;
+    }
+
+    public void setmEndAvailableDate(Date mEndAvailableDate) {
+        this.mEndAvailableDate = mEndAvailableDate;
     }
 }
