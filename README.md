@@ -8,6 +8,7 @@ This fork have some new features, like:
 * Limit the start possible date. 
 * Limit the end possible date.
 * Reset the selected range. 
+* Scroll functions to move to: first available date, first selection ...
 
 
 ![CalendarListview](https://github.com/traex/CalendarListview/blob/master/header.png)
