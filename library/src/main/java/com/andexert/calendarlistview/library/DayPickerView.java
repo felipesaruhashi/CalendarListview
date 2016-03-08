@@ -141,8 +141,10 @@ public class DayPickerView extends RecyclerView
     }
 
     public void scroolToFirstSelection() {
-        SimpleMonthAdapter.SelectedDays<SimpleMonthAdapter.CalendarDay> selectedDays = mAdapter.getSelectedDays();
 
+        if ( mAdapter == null ) return;
+
+        SimpleMonthAdapter.SelectedDays<SimpleMonthAdapter.CalendarDay> selectedDays = mAdapter.getSelectedDays();
         if (selectedDays != null && selectedDays.getFirst() != null ) {
 
             int diff = 0;
@@ -153,12 +155,24 @@ public class DayPickerView extends RecyclerView
                 diff = (selectedDays.getFirst().year - cal.get(Calendar.YEAR)) * 12 + selectedDays.getFirst().month;
             }
 
-
-            Log.i("debugando", "diff: " + diff);
-
-
             this.scrollToPosition(diff);
         }
+    }
+
+    public void scroolToFirstVisibleDate() {
+        if ( mAdapter == null || mStartAvailableDate == null  ) return;
+
+        int diff = 0;
+        Calendar cal = Calendar.getInstance();
+        Calendar startAvailableDate = Calendar.getInstance();
+        startAvailableDate.setTime(mStartAvailableDate);
+        if ( cal.get(Calendar.YEAR) == startAvailableDate.get(Calendar.YEAR)) {
+            diff = startAvailableDate.get(Calendar.MONTH) - cal.get(Calendar.MONTH);
+        } else if ( cal.get(Calendar.YEAR) < startAvailableDate.get(Calendar.YEAR) ) {
+            diff = (startAvailableDate.get(Calendar.YEAR) - cal.get(Calendar.YEAR)) * 12 + startAvailableDate.get(Calendar.MONTH);
+        }
+
+        this.scrollToPosition(diff);
 
     }
 }

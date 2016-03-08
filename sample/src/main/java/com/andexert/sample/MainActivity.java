@@ -25,11 +25,12 @@ public class MainActivity extends Activity implements com.andexert.calendarlistv
         setContentView(R.layout.activity_main);
 
         dayPickerView = (DayPickerView) findViewById(R.id.pickerView);
-        dayPickerView.setmStartAvailableDate(new Date());
 
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.DAY_OF_MONTH, 28);
+        cal.set(Calendar.MONTH, 6);
 
+        dayPickerView.setmStartAvailableDate(cal.getTime());
 
 //        dayPickerView.setmEndAvailableDate(cal.getTime());
         dayPickerView.setController(this);
@@ -45,6 +46,12 @@ public class MainActivity extends Activity implements com.andexert.calendarlistv
             @Override
             public void onClick(View view) {
                 dayPickerView.scroolToFirstSelection();
+            }
+        });
+        ( (Button) findViewById(R.id.btnGoFirstAvailableDate) ).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dayPickerView.scroolToFirstVisibleDate();
             }
         });
     }
