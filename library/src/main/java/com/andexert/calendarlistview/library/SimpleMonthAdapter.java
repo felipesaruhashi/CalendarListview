@@ -183,7 +183,7 @@ public class SimpleMonthAdapter extends RecyclerView.Adapter<SimpleMonthAdapter.
             cal.setTime(mStartAvailableDate);
 
                if ( (calendarDay.month == cal.get(Calendar.MONTH) && calendarDay.year == cal.get(Calendar.YEAR) && cal.get(Calendar.DAY_OF_MONTH) > calendarDay.day )
-                        || ( cal.get(Calendar.YEAR) == cal.get(Calendar.YEAR) && calendarDay.month < cal.get(Calendar.MONTH) )
+                        || ( calendarDay.year == cal.get(Calendar.YEAR) && calendarDay.month < cal.get(Calendar.MONTH) )
                         || (calendarDay.year < cal.get(Calendar.YEAR)) )  {
                 return;
             }

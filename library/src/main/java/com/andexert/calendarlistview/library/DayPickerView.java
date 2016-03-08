@@ -71,7 +71,6 @@ public class DayPickerView extends RecyclerView
         setAdapter(mAdapter);
     }
 
-
 	public void init(Context paramContext) {
         setLayoutManager(new LinearLayoutManager(paramContext));
 		mContext = paramContext;
@@ -91,7 +90,6 @@ public class DayPickerView extends RecyclerView
             }
         };
 	}
-
 
 	protected void setUpAdapter() {
 		if (mAdapter == null) {

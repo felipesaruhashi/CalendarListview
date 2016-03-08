@@ -28,7 +28,7 @@ public class MainActivity extends Activity implements com.andexert.calendarlistv
 
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.DAY_OF_MONTH, 28);
-        cal.set(Calendar.MONTH, 6);
+        cal.set(Calendar.MONTH, 3);
 
         dayPickerView.setmStartAvailableDate(cal.getTime());
 
@@ -81,7 +81,7 @@ public class MainActivity extends Activity implements com.andexert.calendarlistv
 
         Calendar cal = Calendar.getInstance();
 
-        return 2030;
+        return 2019;
     }
 
     @Override

@@ -298,7 +298,6 @@ class SimpleMonthView extends View
                     ( (mMonth == mStartAvailableMonth && mYear == mStartAvailableYear && mStartAvailableDay > day )
                             || ( mYear == mStartAvailableYear && mMonth < mStartAvailableMonth )
                             || (mYear < mStartAvailableYear) ) ) {
-
                 mMonthNumPaint.setAlpha(70);
 
             }
