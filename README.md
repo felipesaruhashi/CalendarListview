@@ -88,9 +88,6 @@ CalendarListview is fully customizable:
 * app:firstMonth [enum def:-1] --> Start listview at the specified month
 * app:lastMonth [enum def:-1] --> End listview at the specified month
 
-### Contact
-
-You can reach me at [+RobinChutaux](https://plus.google.com/+RobinChutaux) or for technical support feel free to open an issue [here](https://github.com/traex/CalendarListview/issues) :)
 
 ### Acknowledgements
 
